@@ -34,12 +34,12 @@ public class BlackjackApp {
 		sound.play("casino.wav");
 		System.out.println("\n\nEnter your name: ");
 		String name = kb.nextLine();
+		System.out.println("\n\n\tGame starting...");
 		return name;
 
 	}
 
 	public void run(Scanner kb, String name) {
-		System.out.println("\n\n\tGame starting...");
 
 		Player player = new newPlayer(name);
 		Dealer dealer = new Dealer();
@@ -66,15 +66,21 @@ public class BlackjackApp {
 			dealerHand.showHand();
 			System.out.println("Hand value: " + dealerHand.getHandValue());
 
+			if (dealerHand.checkHand() == 21) {
+				printSomeFile("dealerhas21.txt");
+			}
 			System.out.println();
 
 			System.out.println(player.getName() + "'s hand: ");
 			playerHand.showHand();
-			int playerTotal = playerHand.getHandValue();
-			System.out.println("Hand value: " + playerTotal);
+			System.out.println("Hand value: " + playerHand.getHandValue());
+
+			if (playerHand.checkHand() == 21) {
+				printSomeFile("has21.txt");
+			}
 			System.out.println();
 
-			if (playerTotal < 21) {
+			if (playerHand.getHandValue() < 21) {
 				while (playerHand.getHandValue() < 21) {
 					System.out.println(player.getName() + " Select -->    " + "1. Hit   or   2. Stand");
 					playerChoice = kb.nextLine();
@@ -87,17 +93,19 @@ public class BlackjackApp {
 						System.out.println(player.getName() + "'s " + playerHand.getHandValue());
 					}
 					if (playerHand.getHandValue() == 21) {
-						System.out.println("Player has 21!");
+						System.out.println(player.getName() + " has 21!");
+						printSomeFile("has21.txt");
 						break;
 					}
 					if (playerHand.getHandValue() > 21) {
-						System.out.println("Busted");
+						printSomeFile("busted.txt");
 						System.out.println("Player: " + player.getName() + " loses!");
 						break;
 					}
 				}
 			} else if (playerHand.getHandValue() == 21) {
-				System.out.println(player.getName() + "'s" + " has 21!");
+				System.out.println(player.getName());
+				printSomeFile("has21.txt");
 			}
 
 			if (dealerHand.getHandValue() < 17) {
@@ -110,10 +118,12 @@ public class BlackjackApp {
 			userSelection = kb.nextLine();
 
 			if (userSelection.equals("1")) {
-				System.out.println();
+				System.out.println("Deck size: ");
 				dealer.checkDeck();
-				dealerHand.clear();
-				playerHand.clear();
+				if (dealer.checkDeckSize() < 10) {
+					System.out.println("Dealer is shuffling!\n\n\n\n\n\n\n");
+					run(kb, name);
+				}
 			}
 			if (userSelection.equals("2")) {
 
@@ -130,13 +140,12 @@ public class BlackjackApp {
 	}
 
 	public void compareHands(Hand playerHand, Hand dealerHand, Player player) {
-		
+
 		System.out.println("Dealer total: " + dealerHand.getHandValue());
 
 		System.out.println();
 
 		System.out.println(player.getName() + "'s total " + playerHand.getHandValue());
-		
 
 		if (dealerHand.getHandValue() <= 21 && playerHand.getHandValue() > 21) {
 			printSomeFile("youlose.txt");
@@ -155,12 +164,16 @@ public class BlackjackApp {
 				printSomeFile("youlose.txt");
 			}
 		}
-
+		dealerHand.clear();
+		playerHand.clear();
 	}
 
 	public int dealerHand(Dealer dealer, Hand dealerHand) {
 		System.out.println("Dealer Hand: ");
 		dealerHand.showHand();
+		if (!dealerHand.checkForAce()) {
+			System.out.println("No Ace in hand!");
+		}
 		while (dealerHand.getHandValue() < 17) {
 			dealerHand.addCard(dealer.hit());
 			System.out.println("Hand total: " + dealerHand.getHandValue());
@@ -170,6 +183,7 @@ public class BlackjackApp {
 			}
 		}
 		if (dealerHand.getHandValue() == 21) {
+			printSomeFile("dealerhas21.txt");
 			System.out.println("Dealer has Blackjack!");
 		}
 		System.out.println("Dealer total: " + dealerHand.getHandValue());

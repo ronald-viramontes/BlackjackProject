@@ -7,24 +7,38 @@ import java.util.Objects;
 public abstract class Hand {
 	private int handValue;
 	private List<Card> hand;
-	
+
 	public Hand() {
 		hand = new ArrayList<>();
 	}
-	
+
 	public Hand(Deck hand) {
-	
+
 	}
-	
+	public int checkHand() {
+		int result = 0;
+		for (Card card : hand) {
+			result += card.getValue();
+		}
+		return result;
+	}
+	public boolean checkForAce() {
+		boolean aceCheck = false;
+		for (Card card : hand) {
+			if(card.getValue() == 11)  {
+				aceCheck = true;
+			} else {
+				aceCheck = false;
+			}
+		} return aceCheck;
+	}
 	public void showHand() {
 		for (Card card : hand) {
 			System.out.println(card);
+		}
 	}
-	}
-	
-	
+
 	public void addCard(Card card) {
-		
 		hand.add(card);
 	}
 

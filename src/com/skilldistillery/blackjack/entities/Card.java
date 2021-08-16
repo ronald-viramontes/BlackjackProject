@@ -10,12 +10,20 @@ public class Card {
 		this.rank = rank;
 		this.suit = suit;
 	}
+
 	public Card(Card card) {
 		card.displayCard();
 	}
-	public Card() {
+	
+	public Rank checkRank(Card card) {
 		
+		return card.rank;
 	}
+	
+	
+	public Card() {
+	}
+
 	public int getValue() {
 		return rank.getValue();
 	}
@@ -36,12 +44,12 @@ public class Card {
 		Card other = (Card) obj;
 		return rank == other.rank && suit == other.suit;
 	}
+
 	public void displayCard() {
 		System.out.println("" + rank + " of " + suit + "\n");
 	}
-	
+
 	public String toString() {
-		
 		return "" + rank + " of " + suit + "\n";
 	}
 
