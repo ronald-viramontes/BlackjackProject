@@ -1,8 +1,6 @@
-package com.skilldistillery.blackjack.app;
+package com.skilldistillery.blackjack.entities;
 
 import java.util.Objects;
-
-import com.skilldistillery.blackjack.entities.Card;
 
 public abstract class Player {
 		
