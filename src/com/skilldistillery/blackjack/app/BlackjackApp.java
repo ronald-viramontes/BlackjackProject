@@ -13,7 +13,7 @@ import com.skilldistillery.blackjack.entities.Dealer;
 import com.skilldistillery.blackjack.entities.Hand;
 import com.skilldistillery.blackjack.entities.Player;
 import com.skilldistillery.blackjack.entities.SoundBytePlayer;
-import com.skilldistillery.blackjack.entities.newPlayer;
+import com.skilldistillery.blackjack.entities.NewPlayer;
 
 public class BlackjackApp {
 	SoundBytePlayer sound = new SoundBytePlayer();
@@ -41,7 +41,7 @@ public class BlackjackApp {
 
 	public void run(Scanner kb, String name) {
 
-		Player player = new newPlayer(name);
+		Player player = new NewPlayer(name);
 		Dealer dealer = new Dealer();
 		dealer.createNewDeck();
 

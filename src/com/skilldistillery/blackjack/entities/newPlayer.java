@@ -1,8 +1,8 @@
 package com.skilldistillery.blackjack.entities;
 
-public class newPlayer extends Player{
+public class NewPlayer extends Player{
 
-	public newPlayer(String name) {
+	public NewPlayer(String name) {
 		super.setName(name);
 	}
 	

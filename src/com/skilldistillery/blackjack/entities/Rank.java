@@ -1,27 +1,27 @@
 package com.skilldistillery.blackjack.entities;
 
-import java.lang.reflect.Array;
-
 public enum Rank {
 	TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), JACK(10), QUEEN(10), KING(10),
 	ACE(11);
 
 	private int value;
 	private boolean isAce;
-	private int[] aceValue = {11, 1};
+	private int[] aceValue = { 11, 1 };
 
 	Rank(int[] aceValue) {
 		this.aceValue = aceValue;
 	}
-	
+
 	Rank(int numValue) {
 		this.value = numValue;
 	}
+
 	public int[] getAceValue() {
 		return aceValue;
 	}
+
 	public boolean isAnAce() {
-		
+
 		if (!isAce) {
 			isAce = false;
 		} else {
@@ -29,13 +29,13 @@ public enum Rank {
 		}
 		return isAce;
 	}
-	
+
 	public int getValue() {
 		return value;
 	}
 
 	public String toString() {
 		return "" + this.value;
-		
+
 	}
 }
