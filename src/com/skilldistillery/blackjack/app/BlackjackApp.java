@@ -80,7 +80,7 @@ public class BlackjackApp {
 			}
 			System.out.println();
 
-			if (playerHand.getHandValue() < 21) {
+			if (playerHand.getHandValue() < 21 && dealerHand.getHandValue() != 21) {
 				while (playerHand.getHandValue() < 21) {
 					System.out.println(player.getName() + " Select -->    " + "1. Hit   or   2. Stand");
 					playerChoice = kb.nextLine();
@@ -103,9 +103,6 @@ public class BlackjackApp {
 						break;
 					}
 				}
-			} else if (playerHand.getHandValue() == 21) {
-				System.out.println(player.getName());
-				printSomeFile("has21.txt");
 			}
 
 			if (dealerHand.getHandValue() < 17) {
@@ -118,8 +115,7 @@ public class BlackjackApp {
 			userSelection = kb.nextLine();
 
 			if (userSelection.equals("1")) {
-				System.out.println("Deck size: ");
-				dealer.checkDeck();
+
 				if (dealer.checkDeckSize() < 10) {
 					System.out.println("Dealer is shuffling!\n\n\n\n\n\n\n");
 					run(kb, name);
@@ -140,12 +136,6 @@ public class BlackjackApp {
 	}
 
 	public void compareHands(Hand playerHand, Hand dealerHand, Player player) {
-
-		System.out.println("Dealer total: " + dealerHand.getHandValue());
-
-		System.out.println();
-
-		System.out.println(player.getName() + "'s total " + playerHand.getHandValue());
 
 		if (dealerHand.getHandValue() <= 21 && playerHand.getHandValue() > 21) {
 			printSomeFile("youlose.txt");
@@ -171,22 +161,20 @@ public class BlackjackApp {
 	public int dealerHand(Dealer dealer, Hand dealerHand) {
 		System.out.println("Dealer Hand: ");
 		dealerHand.showHand();
-		if (!dealerHand.checkForAce()) {
-			System.out.println("No Ace in hand!");
-		}
+
 		while (dealerHand.getHandValue() < 17) {
 			dealerHand.addCard(dealer.hit());
 			System.out.println("Hand total: " + dealerHand.getHandValue());
 			if (dealerHand.getHandValue() > 21) {
+				printSomeFile("busted.txt");
 				System.out.println("Dealer Busted");
 				break;
 			}
 		}
 		if (dealerHand.getHandValue() == 21) {
 			printSomeFile("dealerhas21.txt");
-			System.out.println("Dealer has Blackjack!");
+			System.out.println("Dealer has 21!");
 		}
-		System.out.println("Dealer total: " + dealerHand.getHandValue());
 		return dealerHand.getHandValue();
 	}
 
